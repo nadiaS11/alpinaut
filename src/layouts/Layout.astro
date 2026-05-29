@@ -12,6 +12,10 @@ const {
   title = 'Alpinaut — Astro + Alpine. Zero React.',
   description = 'A weekly newsletter for developers who want to ship fast websites with Astro and Alpine.js — and skip the React/Next.js bundle tax.',
 } = Astro.props;
+
+// Canonical / OG URL. `Astro.site` comes from astro.config.mjs.
+const canonicalURL = import.meta.env.SITE_URL + Astro.url.pathname
+const ogImage = new URL('/og.svg', Astro.site).toString();
 ---
 
 <!doctype html>
@@ -25,12 +29,24 @@ const {
 
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Alpinaut" />
+
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="theme-color" content="#05060f" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <meta name="theme-color" content="#0a0a12" />
   </head>
   <body class="antialiased"       x-data="{ scrolled: false }"
   x-init="
