@@ -1,0 +1,48 @@
+---
+import SignupForm from './SignupForm.astro';
+
+// Headline options — pick one. The others stay as comments for easy A/B.
+// 1. "Ship websites, not bundles."
+// 2. "Astro for the page. Alpine for the spark. React for nothing."
+// 3. "The fast web doesn't need a framework tax."
+---
+
+<section id="top" class="relative overflow-hidden">
+  <!-- Cosmic backdrop: pure-CSS starfield, no images. -->
+  <div class="absolute inset-0 starfield opacity-70 pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute top-10 right-10 w-2 h-2 rounded-full bg-cyan-200 twinkle pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute top-32 left-1/4 w-1.5 h-1.5 rounded-full bg-amber-200 twinkle pointer-events-none" aria-hidden="true" style="animation-delay: -2s"></div>
+
+  <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-44 md:pt-28 md:pb-56 text-center">
+    <!-- Proof badge -->
+    <p class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300">
+      <span class="inline-block w-1.5 h-1.5 rounded-full bg-ridge-500 animate-pulse" aria-hidden="true"></span>
+      This page ships <span class="font-mono text-ridge-400">~0 KB</span> of framework JS. Astro + Alpine. Zero React.
+    </p>
+
+    <h1 class="mt-6 text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-white leading-[1.05]">
+      Astro for the page.<br />
+      <span class="bg-gradient-to-r from-ridge-400 via-aurora-400 to-cosmos-400 bg-clip-text text-transparent">
+        Alpine for the spark.
+      </span><br />
+      React for nothing.
+    </h1>
+
+    <p class="mt-6 text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto">
+      A weekly dispatch for developers who'd rather ship a 14&nbsp;KB landing page than
+      a 400&nbsp;KB Next.js bundle that renders a single heading.
+    </p>
+
+    <div class="mt-10 flex justify-center">
+      <SignupForm id="hero-signup" />
+    </div>
+
+    <p class="mt-4 text-xs text-slate-500">
+      Curated by humans. No "10x your funnel" garbage. <span aria-hidden="true">·</span> ~3&nbsp;min read.
+    </p>
+  </div>
+
+  <!-- Mountain ridge silhouettes (background then foreground). -->
+  <div class="absolute bottom-0 left-0 right-0 h-40 ridge-back pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute bottom-0 left-0 right-0 h-32 ridge pointer-events-none" aria-hidden="true"></div>
+</section>

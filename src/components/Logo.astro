@@ -1,0 +1,55 @@
+---
+// The Alpinaut sigil — a single geometric A that doubles as a mountain peak,
+// with a small offset planet for the "astro" half of the wordmark.
+// Used in the nav, the footer, and the favicon (kept in sync by hand).
+//
+// `unique` namespaces the gradient IDs so multiple instances on the same page
+// don't collide. Pass `size` in pixels.
+interface Props {
+  size?: number;
+  class?: string;
+  unique?: string;
+}
+const { size = 28, class: className = '', unique = 'nav' } = Astro.props;
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width={size}
+  height={size}
+  viewBox="0 0 32 32"
+  fill="none"
+  class={className}
+  aria-hidden="true"
+>
+  <defs>
+    <linearGradient id={`alpinaut-stroke-${unique}`} x1="4" y1="28" x2="28" y2="6" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="55%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#a5b4fc"/>
+    </linearGradient>
+    <radialGradient id={`alpinaut-planet-${unique}`} cx="0.3" cy="0.3" r="0.9">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#a5b4fc"/>
+    </radialGradient>
+  </defs>
+
+  <rect x="0" y="0" width="32" height="32" rx="8" fill="#0a0b1a"/>
+  <rect x="0.5" y="0.5" width="31" height="31" rx="7.5" stroke="#ffffff" stroke-opacity="0.06"/>
+
+  <path
+    d="M6.5 23.5 L16 8.5 L25.5 23.5"
+    stroke={`url(#alpinaut-stroke-${unique})`}
+    stroke-width="2.25"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M11 19.25 L21 19.25"
+    stroke={`url(#alpinaut-stroke-${unique})`}
+    stroke-width="2.25"
+    stroke-linecap="round"
+    stroke-opacity="0.55"
+  />
+  <circle cx="19.25" cy="6.5" r="1.6" fill={`url(#alpinaut-planet-${unique})`}/>
+</svg>

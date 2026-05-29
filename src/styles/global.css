@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Alpinaut design tokens.
+   We avoid heavy webfonts entirely (system stack) so there is zero
+   render-blocking font CSS. The cosmic/alpine vibe comes from gradients
+   and CSS, not bitmaps.
+   ───────────────────────────────────────────────────────────────────────── */
+@theme {
+  --color-night-950: #05060f;
+  --color-night-900: #0a0b1a;
+  --color-night-800: #0f1226;
+  --color-night-700: #161a36;
+  --color-ridge-500: #34d399;   /* alpine green */
+  --color-ridge-400: #6ee7b7;
+  --color-cosmos-500: #818cf8;  /* astro indigo */
+  --color-cosmos-400: #a5b4fc;
+  --color-aurora-400: #22d3ee;  /* highlight cyan */
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+               "Helvetica Neue", Arial, "Apple Color Emoji", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas,
+               "Liberation Mono", monospace;
+}
+
+html {
+  background: var(--color-night-950);
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: #e2e8f0;
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(129, 140, 248, 0.18), transparent 60%),
+    radial-gradient(900px 500px at 10% 10%, rgba(34, 211, 238, 0.10), transparent 60%),
+    var(--color-night-950);
+  min-height: 100vh;
+}
+
+/* Starfield: pure CSS, GPU-cheap, no images, no JS. */
+.starfield {
+  background-image:
+    radial-gradient(1px 1px at 12% 22%, #ffffff 50%, transparent 51%),
+    radial-gradient(1px 1px at 78% 9%, #c7d2fe 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 41% 64%, #fde68a 50%, transparent 51%),
+    radial-gradient(1px 1px at 65% 35%, #ffffff 50%, transparent 51%),
+    radial-gradient(1px 1px at 22% 88%, #a5f3fc 50%, transparent 51%),
+    radial-gradient(1px 1px at 88% 72%, #ffffff 50%, transparent 51%),
+    radial-gradient(1px 1px at 5% 52%, #ffffff 50%, transparent 51%),
+    radial-gradient(1px 1px at 53% 11%, #c7d2fe 50%, transparent 51%),
+    radial-gradient(1px 1px at 95% 40%, #ffffff 50%, transparent 51%),
+    radial-gradient(1px 1px at 33% 30%, #ffffff 50%, transparent 51%);
+  background-size: 100% 100%;
+}
+
+/* Soft pulsing on a couple of "stars" — fully respects prefers-reduced-motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .twinkle {
+    animation: twinkle 6s ease-in-out infinite;
+  }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 0.35; }
+}
+
+/* The mountain ridge silhouette at the bottom of the hero. SVG clip-path
+   would also work, but a polygon-clipped div is the lightest possible thing. */
+.ridge {
+  background: linear-gradient(180deg, #064e3b 0%, #022c22 100%);
+  clip-path: polygon(
+    0% 100%,
+    0% 60%,
+    8% 45%,
+    14% 55%,
+    22% 30%,
+    30% 50%,
+    38% 38%,
+    46% 58%,
+    55% 22%,
+    63% 48%,
+    72% 35%,
+    80% 52%,
+    88% 40%,
+    96% 55%,
+    100% 48%,
+    100% 100%
+  );
+}
+.ridge-back {
+  background: linear-gradient(180deg, #1e1b4b 0%, #0a0b1a 100%);
+  clip-path: polygon(
+    0% 100%,
+    0% 70%,
+    10% 55%,
+    20% 65%,
+    30% 48%,
+    42% 62%,
+    50% 40%,
+    60% 58%,
+    72% 50%,
+    82% 62%,
+    92% 52%,
+    100% 60%,
+    100% 100%
+  );
+  opacity: 0.6;
+}
+
+/* Buttons */
+.btn-primary {
+  background: linear-gradient(135deg, #34d399 0%, #22d3ee 100%);
+  color: #052e16;
+  font-weight: 600;
+  box-shadow: 0 8px 24px -8px rgba(52, 211, 153, 0.55);
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 12px 28px -8px rgba(52, 211, 153, 0.7); }
+.btn-primary:active { transform: translateY(0); }
+.btn-primary:focus-visible {
+  outline: 2px solid #a5f3fc;
+  outline-offset: 3px;
+}
+
+/* Card surface used across sections */
+.card {
+  background: linear-gradient(180deg, rgba(22, 26, 54, 0.7), rgba(15, 18, 38, 0.7));
+  border: 1px solid rgba(129, 140, 248, 0.15);
+  backdrop-filter: blur(4px);
+}
+
+/* FAQ <details> chevron */
+details > summary { list-style: none; cursor: pointer; }
+details > summary::-webkit-details-marker { display: none; }
+details[open] .chev { transform: rotate(180deg); }
+.chev { transition: transform 200ms ease; }

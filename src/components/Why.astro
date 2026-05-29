@@ -1,0 +1,44 @@
+---
+const pillars = [
+  {
+    icon: '⚡',
+    title: 'Performance by default',
+    body: "Static HTML first, hydration last (if at all). You ship what the page actually needs — not a 200&nbsp;KB runtime to render a marketing headline.",
+  },
+  {
+    icon: '🗻',
+    title: 'No SPA tax',
+    body: "Marketing pages, docs, blogs — they don't need a virtual DOM. Astro gives you components without the bundle bloat, and Alpine handles the dropdown.",
+  },
+  {
+    icon: '🛰️',
+    title: 'The right amount of JS',
+    body: "Sprinkle Alpine where interactivity matters. Skip it everywhere else. Your Lighthouse score stops being a guilty conversation at standup.",
+  },
+];
+---
+
+<section id="why" class="relative py-24 sm:py-32">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl">
+      <p class="text-sm font-mono text-cosmos-400 uppercase tracking-widest">// Why Alpinaut</p>
+      <h2 class="mt-3 text-3xl sm:text-4xl font-bold text-white tracking-tight">
+        You shipped a landing page. Why did it download a SPA?
+      </h2>
+      <p class="mt-4 text-slate-300 text-lg">
+        Most "modern" stacks treat every page like a complex app. Astro + Alpine treats
+        every page like a page — and an app like an app. Here's what shifts when you do that.
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {pillars.map((p) => (
+        <article class="card rounded-2xl p-6">
+          <div class="text-3xl" aria-hidden="true">{p.icon}</div>
+          <h3 class="mt-4 text-lg font-semibold text-white">{p.title}</h3>
+          <p class="mt-2 text-slate-400 leading-relaxed" set:html={p.body} />
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

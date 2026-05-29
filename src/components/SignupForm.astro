@@ -1,0 +1,150 @@
+---
+// ───────────────────────────────────────────────────────────────────────────
+// SignupForm — Buttondown embed.
+//
+// Baseline: pure HTML form that POSTs to Buttondown. Works with JavaScript
+// disabled. This is intentional — the no-JS signup is part of the pitch.
+//
+// Progressive enhancement: Alpine intercepts the submit, posts via fetch,
+// shows inline loading / success / error. If the browser blocks the fetch
+// (e.g. CORS in some environments), we fall through to the native POST so
+// the user is never stranded.
+//
+// To wire up your list: set PUBLIC_BUTTONDOWN_USERNAME below to your
+// Buttondown username (or set it as an environment variable of the same
+// name — Astro exposes any PUBLIC_-prefixed env var to the client).
+// ───────────────────────────────────────────────────────────────────────────
+
+// ⬇⬇⬇ PASTE YOUR BUTTONDOWN USERNAME HERE ⬇⬇⬇
+const PUBLIC_BUTTONDOWN_USERNAME =
+  import.meta.env.PUBLIC_BUTTONDOWN_USERNAME ?? 'your-buttondown-username';
+// ⬆⬆⬆ ─────────────────────────────────────  ⬆⬆⬆
+
+const action = `https://buttondown.com/api/emails/embed-subscribe/${PUBLIC_BUTTONDOWN_USERNAME}`;
+
+interface Props {
+  variant?: 'hero' | 'cta';
+  id?: string;
+}
+const { variant = 'hero', id = 'signup' } = Astro.props;
+---
+
+<form
+  id={id}
+  action={action}
+  method="post"
+  target="_blank"
+  class:list={[
+    'w-full',
+    variant === 'hero' ? 'max-w-xl' : 'max-w-lg mx-auto',
+  ]}
+  x-data="signupForm()"
+  @submit.prevent="submit($event)"
+  novalidate
+>
+  <!-- Buttondown's required marker for embedded forms -->
+  <input type="hidden" name="embed" value="1" />
+
+  <label for={`${id}-email`} class="sr-only">Email address</label>
+
+  <div class="flex flex-col sm:flex-row gap-2 sm:gap-0 sm:bg-night-800/80 sm:border sm:border-white/10 sm:rounded-xl sm:p-1.5 focus-within:sm:border-cosmos-400/60 transition">
+    <input
+      id={`${id}-email`}
+      type="email"
+      name="email"
+      required
+      autocomplete="email"
+      inputmode="email"
+      placeholder="you@your-domain.dev"
+      class="flex-1 bg-night-800/80 sm:bg-transparent border border-white/10 sm:border-0 rounded-lg sm:rounded-none px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 sm:focus:ring-0 focus:ring-cosmos-400/60"
+      :disabled="state === 'loading' || state === 'success'"
+      x-ref="email"
+    />
+    <button
+      type="submit"
+      class="btn-primary rounded-lg px-5 py-3 whitespace-nowrap"
+      :disabled="state === 'loading' || state === 'success'"
+    >
+      <span x-show="state !== 'loading'">Join the Alpinauts</span>
+      <span x-show="state === 'loading'" x-cloak>Sending…</span>
+    </button>
+  </div>
+
+  <!-- Inline status, polite for screen readers -->
+  <p
+    class="mt-3 text-sm min-h-5"
+    role="status"
+    aria-live="polite"
+    x-bind:class="{
+      'text-ridge-400': state === 'success',
+      'text-red-400':   state === 'error',
+      'text-slate-400': state === 'idle' || state === 'loading' }"
+  >
+    <span x-show="state === 'idle'">One email a week. Unsubscribe anytime.</span>
+    <span x-show="state === 'loading'" x-cloak>Beaming you into orbit…</span>
+    <span x-show="state === 'success'" x-cloak>Welcome aboard, Alpinaut 🚀 Check your inbox to confirm.</span>
+    <span x-show="state === 'error'" x-cloak x-text="error || 'Something went sideways. Try again?'"></span>
+  </p>
+
+  <noscript>
+    <p class="mt-2 text-xs text-slate-500">
+      JS is off — that's fine. Submitting will open Buttondown's confirmation page in a new tab.
+    </p>
+  </noscript>
+</form>
+
+<script is:inline define:vars={{ action }}>
+  // Tiny Alpine component. Registered eagerly so the form behaves correctly
+  // even before Alpine's auto-init runs. Total wire weight: a few lines.
+  function signupForm() {
+    return {
+      state: 'idle',    // 'idle' | 'loading' | 'success' | 'error'
+      error: '',
+      async submit(e) {
+        const form = e.target;
+        const email = (this.$refs.email.value || '').trim();
+        if (!email) {
+          this.state = 'error';
+          this.error = 'Please enter an email address.';
+          return;
+        }
+        this.state = 'loading';
+        this.error = '';
+        try {
+          const data = new FormData(form);
+          // Buttondown embeds expect application/x-www-form-urlencoded;
+          // FormData with fetch works fine for their endpoint.
+          const res = await fetch(action, {
+            method: 'POST',
+            body: data,
+            mode: 'no-cors', // we can't read the response, but we *can* tell if the network call itself failed
+          });
+          // With no-cors we get an opaque response — assume success on resolve.
+          if (res.type === 'opaque' || res.ok) {
+            this.state = 'success';
+            form.reset();
+          } else {
+            throw new Error('Subscription failed');
+          }
+        } catch (err) {
+          // Network blew up (offline, blocked, etc.) — fall back to the native
+          // POST so the user is never stuck. The form's `action`/`method` do
+          // the right thing on their own.
+          this.state = 'error';
+          this.error = 'Network hiccup — opening Buttondown directly…';
+          try {
+            form.submit();
+          } catch (_) {
+            /* truly stuck — message already shown */
+          }
+        }
+      },
+    };
+  }
+  // Expose for Alpine's x-data="signupForm()"
+  window.signupForm = signupForm;
+</script>
+
+<style>
+  [x-cloak] { display: none !important; }
+</style>

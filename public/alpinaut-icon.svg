@@ -1,0 +1,24 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Alpinaut">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#15151f"/>
+      <stop offset="1" stop-color="#0a0a12"/>
+    </linearGradient>
+  </defs>
+
+  <!-- squircle badge -->
+  <rect x="0" y="0" width="512" height="512" rx="120" fill="url(#bg)"/>
+  <rect x="1" y="1" width="510" height="510" rx="119" fill="none" stroke="#ffffff" stroke-opacity="0.07" stroke-width="2"/>
+
+  <!-- orbit -->
+  <ellipse cx="256" cy="206" rx="140" ry="44" fill="none"
+           stroke="#4fd1c5" stroke-opacity="0.6" stroke-width="6"
+           transform="rotate(-18 256 206)"/>
+
+  <!-- peak -->
+  <path d="M176 346 L256 206 L336 346" fill="none" stroke="#f5f5f4"
+        stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- orbiting body -->
+  <circle cx="382" cy="185" r="14" fill="#4fd1c5"/>
+</svg>

@@ -1,0 +1,52 @@
+---
+// TODO: Replace these placeholder testimonials with real quotes from
+// subscribers before launch. Keep the structure ({ quote, name, handle, role }).
+const testimonials = [
+  {
+    quote: "Finally a newsletter that respects my LCP. The Pattern of the Week alone is worth the inbox slot.",
+    name: 'TODO — placeholder',
+    handle: '@todo_dev',
+    role: 'Staff Eng, somewhere fast',
+  },
+  {
+    quote: "I rewrote our marketing site from Next.js to Astro + Alpine after issue #4. Bundle went from 380 KB to 9 KB.",
+    name: 'TODO — placeholder',
+    handle: '@todo_designer',
+    role: 'Indie hacker',
+  },
+  {
+    quote: "Reads like a thoughtful friend yelling \"you don't need a virtual DOM\" into your terminal. In a good way.",
+    name: 'TODO — placeholder',
+    handle: '@todo_oss',
+    role: 'OSS maintainer',
+  },
+];
+---
+
+<section class="relative py-24 sm:py-32" aria-labelledby="proof-heading">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl">
+      <p class="text-sm font-mono text-cosmos-400 uppercase tracking-widest">// Receipts</p>
+      <h2 id="proof-heading" class="mt-3 text-3xl sm:text-4xl font-bold text-white tracking-tight">
+        From people who already ditched the bundle
+      </h2>
+    </div>
+
+    <ul class="mt-12 grid gap-6 md:grid-cols-3">
+      {testimonials.map((t) => (
+        <li class="card rounded-2xl p-6 flex flex-col">
+          <svg aria-hidden="true" class="w-7 h-7 text-cosmos-400/70 mb-3" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M7.17 6A5.17 5.17 0 0 0 2 11.17V18h6v-6H4.5A2.67 2.67 0 0 1 7.17 9.33V6Zm10 0A5.17 5.17 0 0 0 12 11.17V18h6v-6h-3.5A2.67 2.67 0 0 1 17.17 9.33V6Z"/>
+          </svg>
+          <blockquote class="text-slate-200 leading-relaxed">"{t.quote}"</blockquote>
+          <figcaption class="mt-5 pt-4 border-t border-white/5 text-sm">
+            <div class="text-white font-semibold">{t.name}</div>
+            <div class="text-slate-500">
+              <span class="font-mono">{t.handle}</span> · {t.role}
+            </div>
+          </figcaption>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

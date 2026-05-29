@@ -1,0 +1,65 @@
+---
+const sections = [
+  {
+    tag: '01 — The lead',
+    title: 'A short, opinionated take',
+    body: "One topic. One angle. ~300 words. Things like \"why view transitions broke my brain (in a good way)\" or \"the case against client:load.\"",
+  },
+  {
+    tag: '02 — The links',
+    title: 'A few hand-picked links',
+    body: "Three to five links from across the Astro/Alpine/HTMX/Hotwire world — each with a one-sentence take so you know whether to click.",
+  },
+  {
+    tag: '03 — Pattern of the week',
+    title: 'A copy-pasteable snippet',
+    body: "A small Astro component, an Alpine directive trick, or a build-time hack. Production-shaped, not a toy demo.",
+  },
+];
+---
+
+<section id="weekly" class="relative py-24 sm:py-32 border-t border-white/5 bg-night-900/40">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+      <div class="max-w-2xl">
+        <p class="text-sm font-mono text-ridge-400 uppercase tracking-widest">// Every Wednesday</p>
+        <h2 class="mt-3 text-3xl sm:text-4xl font-bold text-white tracking-tight">
+          What lands in your inbox
+        </h2>
+        <p class="mt-4 text-slate-300 text-lg">
+          Three sections. Skimmable in three minutes. Useful for the rest of the week.
+        </p>
+      </div>
+      <div class="text-sm text-slate-500 font-mono">
+        <span class="text-slate-300">~3 min</span> · plain text-friendly
+      </div>
+    </div>
+
+    <ol class="mt-12 grid gap-6 lg:grid-cols-3">
+      {sections.map((s) => (
+        <li class="card rounded-2xl p-6">
+          <p class="text-xs font-mono text-cosmos-400 uppercase tracking-widest">{s.tag}</p>
+          <h3 class="mt-3 text-xl font-semibold text-white">{s.title}</h3>
+          <p class="mt-3 text-slate-400 leading-relaxed">{s.body}</p>
+        </li>
+      ))}
+    </ol>
+
+    <!-- A mini Pattern-of-the-week preview, mostly for vibes -->
+    <div class="mt-10 card rounded-2xl overflow-hidden">
+      <div class="flex items-center gap-2 px-5 py-3 border-b border-white/5 bg-night-800/60 text-xs font-mono text-slate-400">
+        <span class="w-2.5 h-2.5 rounded-full bg-red-400/70" aria-hidden="true"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-amber-400/70" aria-hidden="true"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400/70" aria-hidden="true"></span>
+        <span class="ml-3">pattern-of-the-week.astro</span>
+      </div>
+      <pre class="text-sm sm:text-[0.95rem] p-5 overflow-x-auto leading-relaxed text-slate-200"><code>{`<!-- Lazy-hydrate an Alpine widget only when it scrolls into view -->
+<div x-data="pricingToggle()" x-intersect.once="$el.dispatchEvent(new Event('mount'))">
+  <button @click="annual = !annual" :aria-pressed="annual">
+    <span x-text="annual ? 'Billed yearly' : 'Billed monthly'"></span>
+  </button>
+  <p x-text="annual ? '$96/yr' : '$10/mo'"></p>
+</div>`}</code></pre>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,61 @@
+---
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Alpinaut — Astro + Alpine. Zero React.',
+  description = 'A weekly newsletter for developers who want to ship fast websites with Astro and Alpine.js — and skip the React/Next.js bundle tax.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/alpinaut-icon.svg" />
+    <link rel="apple-touch-icon" href="/alpinaut-icon.svg" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#05060f" />
+  </head>
+  <body class="antialiased"       x-data="{ scrolled: false }"
+  x-init="
+scrolled = window.scrollY > 16;
+
+let ticking = false;
+window.addEventListener('scroll', () => {
+if (!ticking) {
+  window.requestAnimationFrame(() => {
+    scrolled = window.scrollY > 16;
+    ticking = false;
+  });
+  ticking = true;
+}
+}, { passive: true });
+">
+    <a
+      href="#signup"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-white focus:text-night-950 focus:px-3 focus:py-2 focus:rounded-md focus:font-semibold"
+    >
+      Skip to signup
+    </a>
+
+    <Nav />
+    <slot />
+    <Footer />
+  </body>
+</html>

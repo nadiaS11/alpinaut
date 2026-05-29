@@ -1,0 +1,16 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Alpinaut">
+  <defs>
+    <linearGradient id="bgf" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#15151f"/>
+      <stop offset="1" stop-color="#0a0a12"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="512" height="512" rx="120" fill="url(#bgf)"/>
+  <!-- orbit kept subtle; peak + body bolder so it reads at 16px -->
+  <ellipse cx="256" cy="210" rx="138" ry="42" fill="none"
+           stroke="#4fd1c5" stroke-opacity="0.45" stroke-width="7"
+           transform="rotate(-18 256 210)"/>
+  <path d="M164 352 L256 196 L348 352" fill="none" stroke="#f5f5f4"
+        stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="388" cy="184" r="20" fill="#4fd1c5"/>
+</svg>
