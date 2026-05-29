@@ -5,7 +5,8 @@ import tailwindcss from '@tailwindcss/vite';
 // Static site — no SSR adapter needed. Output is plain HTML/CSS + a tiny
 // Alpine bundle, which is the whole point of this project.
 export default defineConfig({
-  output: 'static',
+  site: "https://alpinaut.netlify.app/",
+  output: "static",
   integrations: [alpinejs()],
   vite: {
     plugins: [tailwindcss()],
